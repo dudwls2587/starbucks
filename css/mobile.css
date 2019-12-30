@@ -1,0 +1,105 @@
+@charset "UTF-8";
+
+/* nav */
+nav{
+    /* 2depth메뉴가 펼쳐졌을 때 nav영역을 벗어나면 스크롤 자동 발생 */
+    overflow-y: auto;
+    position: fixed;
+    top:70px; 
+    left:-250px;
+    bottom:0;
+    width:250px;
+    background: #2c2c29;
+    transition: left 0.5s;
+}
+[for="btn-menu"]{
+    position: absolute;
+    top:20px;
+    left:20px;
+    width: 25px;
+    height: 25px;
+}
+[for="btn-menu"] span{
+    position: absolute;
+    width: 25px;
+    height: 2px;
+    background: #fff;
+    transform-origin: 2px 1px;
+    transition: 0.5s;
+}
+[for="btn-menu"] span:nth-child(1){top:4px;}
+[for="btn-menu"] span:nth-child(2){top:50%; transform: translateY(-50%);}
+[for="btn-menu"] span:nth-child(3){bottom:4px;}
+
+#btn-menu:checked+label span:nth-child(1){transform: rotate(45deg);}
+#btn-menu:checked+label span:nth-child(2){opacity: 0;}
+#btn-menu:checked+label span:nth-child(3){transform: rotate(-45deg);}
+
+#btn-menu:checked ~ nav{
+    left:0;
+}
+#btn-menu:checked ~ nav::before{
+    content: '';
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+
+  /* 배너 */
+  .banner{
+    position: relative;
+    height: 70px;
+}
+.banner .wrap{
+    /* 배너하나의 넓이 189px */
+    /* 보여주고자 하는 배너의 수만큼 곱하기 처리 */
+    width: 378px;
+    margin: auto;
+
+    /* 2개만 보여주기 위해 나머지는 숨김처리 */
+    overflow: hidden;
+}
+.banner .wrap ul{
+    /* li를 가지고 있는 ul의 총 넓이를 지정한다. */
+    /* li하나의 넓이 * li의 총 갯수 = ul의 넓이 */
+    /* 189*8= */
+    width: 1512px;
+    /* 애니메이션 설정 */
+    animation: banner 10s linear infinite;
+}
+.banner .wrap ul li{
+    float: left;
+    width: auto;
+}
+.banner .wrap ul li img{
+    display: block;
+}
+.banner .wrap ul li span{
+    display: none;
+}
+#btn-banner{
+    display: none;
+}
+
+/* 재생 정지 아이콘 */
+.banner .wrap label{
+    position: absolute;
+    bottom: 7px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+/* 체크상태가 바뀔 때마다 아이콘이 변경되어야 함으로 아이콘 코드값을 직접 넣어준다. */
+.banner .wrap label::before{content: '\f04c';}
+#btn-banner:checked+label::before{content: '\f04b';}
+
+/* 애니메이션 일시정지 */
+#btn-banner:checked~ul{animation-play-state: paused;}
+
+/* 배너가 움직이는 애니메이션 */
+@keyframes banner {
+    0%{margin-left:0;}
+    /* 배너하나의 넓이*실제로 보여줄 배너의 갯수6=움직어야할 수치 */
+    100%{margin-left:-1134px;}
+}
